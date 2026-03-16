@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Navigation - Trash button
     document.getElementById("trash").addEventListener("click", function() {
         window.location.href = "trash.html";
+        
     });
     document.getElementById("home").addEventListener("click", function() {
         window.location.href = "index.html";
@@ -76,10 +77,43 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+//listen to delete button clicks on the notes container
+document.getElementById("notes-container").addEventListener("click", function(event) {
+    if (event.target.classList.contains("delete-btn")) {
+        const noteId = parseInt(event.target.getAttribute("data-id"));
+        deleteNote(noteId);
+    }
+});
+
+
+// Function to delete a note (move to trash)
+function deleteNote(noteId) {
+    let notes = getNotesFromStorage();
+    const noteIndex = notes.findIndex(note => note.id === noteId);
+
+    if (noteIndex !== -1) {
+        // Move note to deleted notes
+        const [deletedNote] = notes.splice(noteIndex, 1);
+        const deletedNotes = getDeletedNotesFromStorage();
+        deletedNotes.push(deletedNote);
+        localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+
+        // Save updated notes
+        localStorage.setItem("notes", JSON.stringify(notes));
+        loadNotes();
+    }
+}
+
 // Get notes from localStorage
 function getNotesFromStorage() {
     const notes = localStorage.getItem("notes");
     return notes ? JSON.parse(notes) : [];
+}
+
+// Get deleted notes from localStorage
+function getDeletedNotesFromStorage() {
+    const deletedNotes = localStorage.getItem("deletedNotes");
+    return deletedNotes ? JSON.parse(deletedNotes) : [];
 }
 
 // Load and display notes
@@ -102,6 +136,7 @@ function loadNotes() {
         noteCard.innerHTML = `
             <h3 class="note-title">${escapeHtml(note.title)}</h3>
             <p class="note-content">${escapeHtml(note.content)}</p>
+            <button class="delete-btn" onclick="deleteNote(${note.id})">Delete</button>
             <small class="note-date">${new Date(note.createdAt).toLocaleDateString()}</small>
         `;
         notesContainer.appendChild(noteCard);
