@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="global.css">
+</head>
+<body>
+    <header class="hero">
+        <h1 class="title">Notes</h1>
+    </header>
+    <main>
+
+        <section class="notes-section">
+            <h2>My Notes</h2>
+            <div id="notes-container" class="notes-container">
+                <!-- Notes will be dynamically added here -->
+            </div>
+        </section>
+        <div class="button">
+            <button id="addNoteBtn">+</button>
+        </div>
+    </main>
+
+    <!---this is my special nav bar its supposed to the bottom -->
+    <section class="nav">
+       <nav class="navbar">
+         <button id="home">Home</button>
+         <button id="uploadBtn">Upload Picture</button>
+         <button id="aiAssistant">AI Assistant</button>
+         <button id="suggestions">Suggestions</button>
+         <button id="trash">Trash</button>
+         <button id="done">Done</button>
+        </nav>
+        <br>
+        <div class="footer-nav">
+            <p>&copy; 2026 Enoch Simfukwe. Built with passion and curiosity.</p>
+        </div>
+    </section>
+
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Note</h2>
+            <input type="text" id="noteTitle" placeholder="Note Title">
+            <textarea id="noteContent" placeholder="Note Content"></textarea>
+            <div class="modal-buttons">
+                <button id="cancelNoteBtn">Cancel</button>
+                <button id="saveNoteBtn">Save Note</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
